@@ -25,7 +25,7 @@ type rows struct {
 	stream       chan *data.Block
 	columns      []string
 	blockColumns []column.Column
-	profileInfo  *ProfileInfo
+	ProfileInfo  *ProfileInfo
 }
 
 func (rows *rows) Columns() []string {
@@ -109,7 +109,7 @@ func (rows *rows) receiveData() error {
 			if profileInfo, err = rows.ch.profileInfo(); err != nil {
 				return rows.setError(err)
 			}
-			rows.profileInfo = profileInfo
+			rows.ProfileInfo = profileInfo
 			rows.ch.logf("[rows] <- profiling: rows=%d, bytes=%d, blocks=%d", profileInfo.Rows, profileInfo.Bytes, profileInfo.Blocks)
 		case protocol.ServerData, protocol.ServerTotals, protocol.ServerExtremes:
 			var (
