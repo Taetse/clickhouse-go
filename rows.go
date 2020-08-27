@@ -110,7 +110,7 @@ func (rows *rows) receiveData() error {
 				return rows.setError(err)
 			}
 			rows.profileInfo = profileInfo
-			rows.ch.logf("[rows] <- profiling: rows=%d, bytes=%d, blocks=%d", profileInfo.Rows, profileInfo.Bytes, profileInfo.Blocks)
+			rows.ch.logf("[rows] <- profiling: rows=%d, bytes=%d, blocks=%d", profileInfo.rows, profileInfo.bytes, profileInfo.blocks)
 		case protocol.ServerData, protocol.ServerTotals, protocol.ServerExtremes:
 			var (
 				block *data.Block
