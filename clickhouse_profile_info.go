@@ -1,36 +1,36 @@
 package clickhouse
 
-type ProfileInfo struct {
-	Rows                      uint64
-	Bytes                     uint64
-	Blocks                    uint64
-	AppliedLimit              bool
-	RowsBeforeLimit           uint64
-	CalculatedRowsBeforeLimit bool
+type profileInfo struct {
+	rows                      uint64
+	bytes                     uint64
+	blocks                    uint64
+	appliedLimit              bool
+	rowsBeforeLimit           uint64
+	calculatedRowsBeforeLimit bool
 }
 
-func (ch *clickhouse) profileInfo() (*ProfileInfo, error) {
+func (ch *clickhouse) profileInfo() (*profileInfo, error) {
 	var (
-		p   ProfileInfo
+		p   profileInfo
 		err error
 	)
-	if p.Rows, err = ch.decoder.Uvarint(); err != nil {
+	if p.rows, err = ch.decoder.Uvarint(); err != nil {
 		return nil, err
 	}
-	if p.Blocks, err = ch.decoder.Uvarint(); err != nil {
+	if p.blocks, err = ch.decoder.Uvarint(); err != nil {
 		return nil, err
 	}
-	if p.Bytes, err = ch.decoder.Uvarint(); err != nil {
+	if p.bytes, err = ch.decoder.Uvarint(); err != nil {
 		return nil, err
 	}
 
-	if p.AppliedLimit, err = ch.decoder.Bool(); err != nil {
+	if p.appliedLimit, err = ch.decoder.Bool(); err != nil {
 		return nil, err
 	}
-	if p.RowsBeforeLimit, err = ch.decoder.Uvarint(); err != nil {
+	if p.rowsBeforeLimit, err = ch.decoder.Uvarint(); err != nil {
 		return nil, err
 	}
-	if p.CalculatedRowsBeforeLimit, err = ch.decoder.Bool(); err != nil {
+	if p.calculatedRowsBeforeLimit, err = ch.decoder.Bool(); err != nil {
 		return nil, err
 	}
 	return &p, nil

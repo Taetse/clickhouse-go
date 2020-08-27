@@ -25,7 +25,7 @@ type rows struct {
 	stream       chan *data.Block
 	columns      []string
 	blockColumns []column.Column
-	profileInfo  *ProfileInfo
+	profileInfo  *profileInfo
 }
 
 func (rows *rows) Columns() []string {
@@ -86,7 +86,7 @@ func (rows *rows) receiveData() error {
 		err         error
 		packet      uint64
 		progress    *progress
-		profileInfo *ProfileInfo
+		profileInfo *profileInfo
 	)
 	for {
 		if packet, err = rows.ch.decoder.Uvarint(); err != nil {

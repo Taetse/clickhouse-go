@@ -262,7 +262,7 @@ func (ch *clickhouse) process() error {
 			if err != nil {
 				return err
 			}
-			ch.logf("[process] <- profiling: rows=%d, bytes=%d, blocks=%d", profileInfo.Rows, profileInfo.Bytes, profileInfo.Blocks)
+			ch.logf("[process] <- profiling: rows=%d, bytes=%d, blocks=%d", profileInfo.rows, profileInfo.bytes, profileInfo.blocks)
 		case protocol.ServerData:
 			block, err := ch.readBlock()
 			if err != nil {
