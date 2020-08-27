@@ -25,6 +25,7 @@ type rows struct {
 	stream       chan *data.Block
 	columns      []string
 	blockColumns []column.Column
+	profileInfo  *ProfileInfo
 }
 
 func (rows *rows) Columns() []string {
@@ -85,7 +86,7 @@ func (rows *rows) receiveData() error {
 		err         error
 		packet      uint64
 		progress    *progress
-		profileInfo *profileInfo
+		profileInfo *ProfileInfo
 	)
 	for {
 		if packet, err = rows.ch.decoder.Uvarint(); err != nil {
@@ -108,7 +109,8 @@ func (rows *rows) receiveData() error {
 			if profileInfo, err = rows.ch.profileInfo(); err != nil {
 				return rows.setError(err)
 			}
-			rows.ch.logf("[rows] <- profiling: rows=%d, bytes=%d, blocks=%d", profileInfo.rows, profileInfo.bytes, profileInfo.blocks)
+			rows.profileInfo = profileInfo
+			rows.ch.logf("[rows] <- profiling: rows=%d, bytes=%d, blocks=%d", profileInfo.Rows, profileInfo.Bytes, profileInfo.Blocks)
 		case protocol.ServerData, protocol.ServerTotals, protocol.ServerExtremes:
 			var (
 				block *data.Block
